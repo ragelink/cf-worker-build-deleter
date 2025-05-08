@@ -7,6 +7,15 @@ import sys
 import time
 from typing import Dict, List, Optional, Union
 
+# Import version from package if available
+try:
+    from deleter import __version__
+except ImportError:
+    try:
+        from . import __version__
+    except (ImportError, ValueError):
+        __version__ = '1.0.0'  # Default version if not importable
+
 
 def load_env_file(file_path):
     """Load environment variables from a file."""
@@ -270,6 +279,7 @@ def main():
     
     parser.add_argument("--account-id", help="Cloudflare account ID")
     parser.add_argument("--project-name", help="Pages project name")
+    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
     
     # Auth options
     auth_group = parser.add_argument_group("Authentication (use either token or email+key)")

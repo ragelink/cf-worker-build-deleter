@@ -1,0 +1,2 @@
+[console_scripts]
+cf-pages-deleter = deleter.delete_deployments:main

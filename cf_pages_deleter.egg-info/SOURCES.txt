@@ -1,0 +1,10 @@
+README.md
+setup.py
+cf_pages_deleter.egg-info/PKG-INFO
+cf_pages_deleter.egg-info/SOURCES.txt
+cf_pages_deleter.egg-info/dependency_links.txt
+cf_pages_deleter.egg-info/entry_points.txt
+cf_pages_deleter.egg-info/requires.txt
+cf_pages_deleter.egg-info/top_level.txt
+deleter/__init__.py
+deleter/delete_deployments.py

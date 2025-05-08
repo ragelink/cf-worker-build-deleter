@@ -2,17 +2,50 @@
 
 A utility to delete all deployments from a Cloudflare Pages project.
 
+## Project Organization
+
+This project is organized as follows:
+
+- The root directory contains a wrapper script (`delete_deployments.py`) that calls the implementation in the `deleter` directory
+- The `deleter` directory contains the actual implementation, including Docker configuration files
+- Configuration files (envfile) can be placed in either the root directory or the `deleter` directory
+
 ## Installation
+
+There are several ways to install and use this tool:
+
+### Option 1: Use the project directly
 
 1. Clone the repository or download the script
 2. Set up a virtual environment and install requirements:
 
 ```bash
-cd deleter
 python -m venv venv
 source venv/bin/activate  # On Windows, use venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r deleter/requirements.txt
 ```
+
+3. Make the script executable:
+
+```bash
+chmod +x delete_deployments.py
+```
+
+### Option 2: Install as a package
+
+You can install this tool as a Python package, which will make the `cf-pages-deleter` command available in your environment:
+
+```bash
+pip install .
+```
+
+Then you can use the tool with:
+
+```bash
+cf-pages-deleter --help
+```
+
+### Option 3: Use Docker (see Docker Usage section below)
 
 ## Usage
 
@@ -38,7 +71,7 @@ With your envfile configured, simply run:
 ./delete_deployments.py
 ```
 
-By default, the script looks for an envfile in the parent directory. You can specify a different location:
+By default, the script looks for an envfile in the current directory. You can specify a different location:
 
 ```bash
 ./delete_deployments.py --env-file /path/to/your/envfile
@@ -71,6 +104,23 @@ export CF_API_TOKEN=your_token
 export CF_ACCOUNT_ID=your_account_id
 export CF_PAGES_PROJECT_NAME=your_project_name
 ./delete_deployments.py
+```
+
+### Docker Usage
+
+You can also run the tool using Docker:
+
+```bash
+cd deleter
+docker-compose run --rm deleter
+```
+
+Or build and run the Docker image directly:
+
+```bash
+cd deleter
+docker build -t cf-pages-deleter .
+docker run --rm -it cf-pages-deleter --env-file /path/to/envfile
 ```
 
 ### Filter by Environment
