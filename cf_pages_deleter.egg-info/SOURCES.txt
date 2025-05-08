@@ -7,4 +7,15 @@ cf_pages_deleter.egg-info/entry_points.txt
 cf_pages_deleter.egg-info/requires.txt
 cf_pages_deleter.egg-info/top_level.txt
 deleter/__init__.py
-deleter/delete_deployments.py
+deleter/config/envfile.sample
+deleter/docker/Dockerfile
+deleter/docker/docker-compose.yml
+deleter/scripts/cf-pages-deleter.sh
+deleter/scripts/delete-all.sh
+deleter/src/__init__.py
+deleter/src/delete_deployments.py
+deleter/src/requirements.txt
+tests/test_deleter.py
+tests/test_integration.py
+tests/test_main.py
+tests/test_wrapper.py

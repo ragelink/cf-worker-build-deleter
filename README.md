@@ -9,7 +9,11 @@ A utility to delete all deployments from a Cloudflare Pages project.
 This project is organized as follows:
 
 - The root directory contains a wrapper script (`delete_deployments.py`) that calls the implementation in the `deleter` directory
-- The `deleter` directory contains the actual implementation, including Docker configuration files
+- The `deleter` directory contains the actual implementation, including:
+  - `src/` - Core Python files and requirements
+  - `scripts/` - Shell scripts for easier execution
+  - `docker/` - Docker configuration files
+  - `config/` - Configuration templates
 - Configuration files (envfile) can be placed in either the root directory or the `deleter` directory
 
 ## Installation
@@ -24,7 +28,7 @@ There are several ways to install and use this tool:
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows, use venv\Scripts\activate
-pip install -r deleter/requirements.txt
+pip install -r deleter/src/requirements.txt
 ```
 
 3. Make the script executable:
@@ -113,7 +117,7 @@ export CF_PAGES_PROJECT_NAME=your_project_name
 You can also run the tool using Docker:
 
 ```bash
-cd deleter
+cd deleter/docker
 docker-compose run --rm deleter
 ```
 
@@ -121,7 +125,7 @@ Or build and run the Docker image directly:
 
 ```bash
 cd deleter
-docker build -t cf-pages-deleter .
+docker build -t cf-pages-deleter -f docker/Dockerfile .
 docker run --rm -it cf-pages-deleter --env-file /path/to/envfile
 ```
 
@@ -189,4 +193,79 @@ This tool addresses all these limitations and provides additional features:
 - **Docker Support**: Can be run in a containerized environment
 - **Installable Package**: Can be installed as a Python package with command-line entry point
 
-The tool was developed for real-world use cases where projects can have hundreds or thousands of deployments that need to be systematically cleaned up. 
+The tool was developed for real-world use cases where projects can have hundreds or thousands of deployments that need to be systematically cleaned up.
+
+## Development
+
+### Testing
+
+This project uses pytest for testing. To run the tests:
+
+```bash
+# Using the test script
+./run_tests.sh
+
+# Or using Make
+make test
+```
+
+To run with verbose output:
+
+```bash
+make test-verbose
+```
+
+### Code Quality
+
+We use flake8 for code linting:
+
+```bash
+make lint
+```
+
+### CI/CD
+
+This project uses GitHub Actions for continuous integration. The CI pipeline:
+
+1. Runs on multiple Python versions (3.8 - 3.13)
+2. Performs code linting
+3. Runs tests with coverage reporting
+4. Builds and validates the Python package
+
+The CI configuration can be found in `.github/workflows/ci.yml`.
+
+### Common Development Tasks
+
+A Makefile is provided with common development tasks:
+
+```bash
+# Install development dependencies
+make install
+
+# Run tests
+make test
+
+# Run linting
+make lint
+
+# Build the package
+make build
+
+# Clean up build artifacts
+make clean
+
+# Do everything (install, test, lint, build)
+make all
+```
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+All PRs will be automatically tested by the CI pipeline. 

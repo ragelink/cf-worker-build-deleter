@@ -1,6 +1,8 @@
 services:
   deleter:
-    build: .
+    build: 
+      context: ..
+      dockerfile: docker/Dockerfile
     volumes:
       - ${PWD}/envfile:/app/envfile:ro
     environment:

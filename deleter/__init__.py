@@ -1,7 +1,11 @@
 """
 Cloudflare Pages Deployment Deleter
 
-A utility to delete all deployments from a Cloudflare Pages project.
+Top-level package for the Cloudflare Pages deployment deletion utility.
 """
 
-__version__ = '1.0.0' 
+# Import version from the src module
+try:
+    from deleter.src import __version__
+except ImportError:
+    __version__ = '1.0.0'  # Default version if not importable 

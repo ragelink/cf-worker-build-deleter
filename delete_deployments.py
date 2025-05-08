@@ -6,7 +6,9 @@ import argparse
 def main_wrapper():
     # Add the deleter directory to the Python path
     deleter_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'deleter')
+    src_dir = os.path.join(deleter_dir, 'src')
     sys.path.insert(0, deleter_dir)
+    sys.path.insert(0, src_dir)
     
     # First check if there's an envfile in the current directory or parent
     # and copy any arguments related to envfile location
@@ -33,18 +35,24 @@ def main_wrapper():
     
     # Import and run the main function from the implementation
     try:
-        from delete_deployments import main
+        # Try from deleter.src module (preferred path)
+        from deleter.src.delete_deployments import main
         main()
     except ImportError as e:
-        # Try with fully qualified path as backup
         try:
-            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-            from deleter.delete_deployments import main
-            main()
+            # Try with direct src import
+            sys.path.insert(0, src_dir)
+            from delete_deployments import main as src_main
+            src_main()
         except ImportError:
-            print(f"Error: Could not import the delete_deployments module: {e}")
-            print("Make sure you're running this script from the project root directory.")
-            sys.exit(1)
+            try:
+                # Legacy path for backward compatibility
+                from deleter.delete_deployments import main
+                main()
+            except ImportError:
+                print(f"Error: Could not import the delete_deployments module: {e}")
+                print("Make sure you're running this script from the project root directory.")
+                sys.exit(1)
 
 if __name__ == "__main__":
     main_wrapper() 
