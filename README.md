@@ -2,6 +2,8 @@
 
 A utility to delete all deployments from a Cloudflare Pages project.
 
+> **Note:** This tool was created because the [official Cloudflare solution](https://developers.cloudflare.com/pages/platform/known-issues/#delete-a-project-with-a-high-number-of-deployments) for deleting projects with a high number of deployments doesn't work reliably. Our tool provides a more robust approach with additional features like dry run mode, progress tracking, and force deletion options.
+
 ## Project Organization
 
 This project is organized as follows:
@@ -164,4 +166,27 @@ For debugging or to see more details about API requests:
 - You need appropriate Cloudflare API permissions to perform these operations
 - The script includes a delay between deletions to avoid rate limiting
 - For security, it's recommended to use API tokens with limited scope instead of global API keys
-- When using `--force`, be careful as this can delete your active production deployment 
+- When using `--force`, be careful as this can delete your active production deployment
+
+## Why This Tool Exists
+
+Cloudflare's official documentation acknowledges an [issue with deleting projects that have many deployments](https://developers.cloudflare.com/pages/platform/known-issues/#delete-a-project-with-a-high-number-of-deployments). Their recommended solution is a Node.js script that has several limitations:
+
+1. It doesn't provide progress tracking for large numbers of deployments
+2. It lacks a dry-run mode to preview deletions before executing them
+3. It doesn't handle rate limiting dynamically
+4. It has minimal error handling
+5. It doesn't offer environment-specific filtering
+
+This tool addresses all these limitations and provides additional features:
+
+- **Progress Tracking**: Shows completion percentage and counts of successful/failed deletions
+- **Dry Run Mode**: Preview which deployments would be deleted without making changes
+- **Dynamic Rate Limiting**: Adjusts request timing based on API response
+- **Comprehensive Error Handling**: Detects and reports specific error conditions
+- **Multiple Authentication Methods**: Supports both API tokens and email+key authentication
+- **Environment Filtering**: Can target specific environments (production/preview)
+- **Docker Support**: Can be run in a containerized environment
+- **Installable Package**: Can be installed as a Python package with command-line entry point
+
+The tool was developed for real-world use cases where projects can have hundreds or thousands of deployments that need to be systematically cleaned up. 

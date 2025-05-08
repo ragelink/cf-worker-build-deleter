@@ -292,8 +292,8 @@ def main():
                         help="Filter deployments by environment")
     parser.add_argument("--dry-run", action="store_true", 
                         help="Show what would be deleted without actually deleting")
-    parser.add_argument("--env-file", default="../envfile",
-                        help="Path to environment file (default: ../envfile)")
+    parser.add_argument("--env-file", default="envfile",
+                        help="Path to environment file (default: envfile)")
     parser.add_argument("--verbose", "-v", action="store_true",
                         help="Enable verbose debug output")
     parser.add_argument("--force", "-f", action="store_true",
