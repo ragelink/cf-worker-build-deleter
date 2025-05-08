@@ -1,0 +1,12 @@
+services:
+  deleter:
+    build: .
+    volumes:
+      - ${PWD}/envfile:/app/envfile:ro
+    environment:
+      - CF_API_TOKEN
+      - CF_ACCOUNT_ID
+      - CF_PAGES_PROJECT_NAME
+      - CF_EMAIL
+      - CF_API_KEY
+    command: --env-file envfile 

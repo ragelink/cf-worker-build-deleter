@@ -1,0 +1,14 @@
+# Cloudflare API token with Pages:Read and Pages:Edit permissions
+CF_API_TOKEN=your_api_token_here
+
+# Your Cloudflare account ID
+CF_ACCOUNT_ID=your_account_id_here
+
+# Name of the Pages project to delete deployments from
+CF_PAGES_PROJECT_NAME=your_project_name_here
+
+# Optional: Cloudflare email (only needed if using email+key auth instead of token)
+# CF_EMAIL=your_email@example.com
+
+# Optional: Cloudflare API key (only needed if using email+key auth instead of token)
+# CF_API_KEY=your_global_api_key_here 
